@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="container-app">
+      <b-container fluid="lg">
+        <b-row class="d-flex">
+          <b-col cols="12" md="4">
+          <b-row>
+            <b-col cols="12" class="d-flex header">
+              <div class="profile flex-grow-1">
+                <img src="https://www.studiofrancesconi.com/wp-content/uploads/2019/03/placeholder-profile-sq.jpg" class="rounded-circle" alt="">
+              </div>
+              <div class="icon-profile">
+
+              </div>
+            </b-col>
+          </b-row>
+          </b-col>
+          <b-col cols="12" md="8">
+            lsita messaggi
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: {}
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

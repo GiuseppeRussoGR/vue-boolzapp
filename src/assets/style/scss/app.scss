@@ -1,0 +1,26 @@
+@import "_partials/variables";
+@import "_partials/common";
+
+#app {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  #container-app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    & > .container-lg {
+      height: calc(100% - 38px);
+      margin-top: 19px;
+
+      .header {
+        background: $_ligth_grey;
+        height: 59px;
+      }
+    }
+  }
+}

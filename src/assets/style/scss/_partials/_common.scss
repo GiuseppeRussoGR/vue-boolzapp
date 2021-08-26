@@ -1,0 +1,17 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img{
+  width: 100%;
+}
+
+body {
+  background: $_background;
+
+  &.dark {
+    background: $_background_darker;
+  }
+}
