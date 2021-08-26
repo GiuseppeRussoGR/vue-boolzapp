@@ -17,9 +17,111 @@
       height: calc(100% - 38px);
       margin-top: 19px;
 
+
+      .b-overlay{
+        background: $_background_overlay;
+      }
+
       .header {
         background: $_ligth_grey;
         height: 59px;
+
+        img {
+          width: 50px;
+        }
+
+        .icon {
+          color: $_dark_grey;
+          cursor: pointer;
+        }
+      }
+
+      .notify {
+        min-height: 62px;
+        background-color: #9de1fe;
+        cursor: pointer;
+
+        .icon {
+          color: $_ligth_grey;
+        }
+
+        .text {
+          div:nth-child(2):hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .search {
+        background-color: $_ligth_grey;
+        height: 49px;
+
+        button {
+          &.btn {
+            padding: 0.20rem 0.60rem;
+            color: $_dark_grey;
+            background-color: #fff;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+
+        .text-search {
+          input {
+            &.btn {
+              padding: 0.20rem 0.60rem;
+              text-align: left;
+              width: 100%;
+              border: 0;
+              background-color: #fff;
+              border-top-right-radius: 30px;
+              border-bottom-right-radius: 30px;
+              min-height: 34.9px;
+
+              &:focus {
+                box-shadow: none;
+              }
+            }
+          }
+        }
+      }
+
+      .list-chat {
+        height: calc(100% - 200px);
+        background-color: $_background_default;
+
+        .chat-box {
+          height: 72px;
+          border-top: 1px solid $_ligth_grey;
+          border-bottom: 1px solid $_ligth_grey;
+          cursor: pointer;
+
+          img {
+            width: 60px;
+          }
+
+          .text-chat {
+            overflow: hidden;
+
+            .last-message {
+              color: $_dark_grey;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .icon-hour {
+            color: $_dark_grey;
+
+            .hour {
+              font-size: 0.8rem;
+            }
+          }
+        }
       }
     }
   }
