@@ -17,9 +17,8 @@
       height: calc(100% - 38px);
       margin-top: 19px;
 
-
-      .b-overlay{
-        background: $_background_overlay;
+      .left-column {
+        border-right: 1px solid $_ligth_grey;
       }
 
       .header {
@@ -33,6 +32,18 @@
         .icon {
           color: $_dark_grey;
           cursor: pointer;
+
+          .btn {
+            padding: 0;
+
+            &:focus {
+              box-shadow: none;
+            }
+
+            &.btn-link {
+              color: inherit;
+            }
+          }
         }
       }
 
@@ -91,14 +102,18 @@
       }
 
       .list-chat {
-        height: calc(100% - 200px);
+        height: calc(100% - 188px);
         background-color: $_background_default;
 
         .chat-box {
           height: 72px;
-          border-top: 1px solid $_ligth_grey;
+          // border-top: 1px solid $_ligth_grey;
           border-bottom: 1px solid $_ligth_grey;
           cursor: pointer;
+
+          .icon-group {
+            background: $_green_icon;
+          }
 
           img {
             width: 60px;
@@ -119,8 +134,143 @@
 
             .hour {
               font-size: 0.8rem;
+              white-space: nowrap;
             }
           }
+        }
+      }
+
+      .container-overlay {
+        color: $_white;
+
+        .top {
+          height: 158px;
+          background: $_green;
+          position: relative;
+
+          .text-overlay-top {
+            font-size: 1.3rem;
+            position: absolute;
+            left: 10px;
+            bottom: 20px;
+
+            i {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+
+      .init-chat {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 99%, rgba(74, 223, 131, 1) 99%);;
+
+        .text-init {
+          max-width: 400px;
+
+          h1 {
+            font-size: 32px;
+            font-weight: 300;
+          }
+
+          p {
+            font-size: 14px;
+            line-height: 20px;
+            color: rgba(0, 0, 0, 0.45);
+
+            &.message {
+              border-bottom: 1px solid $_ligth_grey;
+            }
+
+            a {
+              text-decoration: none;
+              color: $_green;
+            }
+          }
+        }
+
+        .chat-user-header {
+          background: $_ligth_grey;
+          height: 59px;
+
+          .user-img-profile {
+            img {
+              width: 50px;
+            }
+          }
+
+          .icon-user-header {
+            color: $_dark_grey;
+          }
+        }
+
+        .chat-container {
+          height: calc(100% - 121px);
+          background-image: url("../../img/background.png");
+          background-color: #e5ddd5;
+          background-position: center center;
+
+          .hour-sent{
+            color: $_dark_grey;
+            position: absolute;
+            font-size: 11px;
+            bottom: 3px;
+            right: 10px;
+          }
+
+          .box3 {
+            width: 300px;
+            border-radius: 15px;
+            background: #dcf8c6;
+            color: #000;
+            padding: 10px;
+            text-align: left;
+            font-weight: 400;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+          }
+
+
+          /* speech bubble 13 */
+
+          .sb13:before {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            border-left: 15px solid #dcf8c6;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #dcf8c6;
+            border-bottom: 15px solid transparent;
+            right: -16px;
+            top: 0;
+          }
+
+
+          /* speech bubble 14 */
+
+          .sb14{
+            background-color: #ffffff;
+
+            &:before{
+              content: "";
+              width: 0;
+              height: 0;
+              position: absolute;
+              border-left: 15px solid transparent;
+              border-right: 15px solid #ffffff;
+              border-top: 15px solid #ffffff;
+              border-bottom: 15px solid transparent;
+              left: -16px;
+              top: 0;
+              z-index: -1;
+            }
+          }
+        }
+
+        .footer-chat {
+          height: 62px;
         }
       }
     }
