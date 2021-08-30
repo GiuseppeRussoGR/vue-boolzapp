@@ -1,24 +1,25 @@
-# web_whatsapp
+<h1>Progetto Boolzapp</h1>
+<h3>Riproduzione di una delle Web App più famose</h3>
+<p><em>Navigazione tra le chat, utente reattivo con risposta ripetitiva, possibilità di usare la modalità Dark.</em></p>
 
-## Project setup
-```
-npm install
-```
+Linguaggi utilizzati:
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+<p>
+<ul>
+<li>HTML</li>
+<li>CSS</li>
+</ul>
+</p>
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Framework utilizzati:
 
-### Lints and fixes files
-```
-npm run lint
-```
+<p>
+<ul>
+<li>Vue</li>
+</ul>
+</p>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Anteprima
+
+<img src="OLD/img/Boollzapp Chiaro.png">
+<img src="OLD/img/Boolzap Scuro.png">
