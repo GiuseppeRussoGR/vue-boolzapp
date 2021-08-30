@@ -9,12 +9,14 @@ export default {
                 {
                     date: '01/10/2020 15:30:55',
                     text: 'Hai portato a spasso il cane?',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
                 {
                     date: '01/10/2020 15:50:00',
                     text: 'Ricordati di dargli da mangiare',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
                 {
                     date: '01/10/2020 16:15:22',
@@ -32,7 +34,8 @@ export default {
                 {
                     date: '03/20/2020 16:30:00',
                     text: 'Ciao come stai?',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
                 {
                     date: '03/20/2020 16:30:55',
@@ -42,7 +45,8 @@ export default {
                 {
                     date: '03/20/2020 16:35:00',
                     text: 'Mi piacerebbe ma devo andare a fare la spesa.',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
             ],
         },
@@ -60,7 +64,8 @@ export default {
                 {
                     date: '03/28/2020 10:20:10',
                     text: 'Sicuro di non aver sbagliato chat?',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
                 {
                     date: '03/28/2020 16:15:22',
@@ -78,7 +83,8 @@ export default {
                 {
                     date: '01/10/2020 15:30:55',
                     text: 'Lo sai che ha aperto una nuova pizzeria?',
-                    status: 'sent'
+                    status: 'sent',
+                    read: true
                 },
                 {
                     date: '01/10/2020 15:50:00',

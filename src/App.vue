@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <div id="container-app">
+    <div id="container-app" :class="{'dark' : darkClass}">
       <b-container fluid="lg">
         <b-row class="d-flex h-100">
-          <b-col cols="12" md="4" class="h-100 position-relative left-column">
+          <b-col cols="12" md="4" class="h-100 position-relative left-column"
+                 :class="{'d-none d-md-block': userSelected !== false }">
             <!-- HEADER-->
             <b-row>
               <b-col cols="12" class="d-flex align-items-center justify-content-between header">
@@ -12,6 +13,9 @@
                        class="rounded-circle" alt="">
                 </div>
                 <div class="icon-profile d-flex justify-content-around align-items-center">
+                  <div class="icon pe-2 ps-2">
+                    <i @click="darkMode" class="fas fa-adjust"></i>
+                  </div>
                   <div class="icon pe-2 ps-2">
                     <svg id="ee51d023-7db6-4950-baf7-c34874b80976" viewBox="0 0 24 24" width="24" height="24"
                          class="">
@@ -109,7 +113,7 @@
             </b-overlay>
             <!--End Overlay-->
           </b-col>
-          <b-col cols="12" md="8" class="h-100">
+          <b-col cols="12" md="8" class="h-100" :class="{'d-none d-md-block ': userSelected === false }">
             <!--Chat-->
             <b-row class="h-100 init-chat overflow-hidden">
               <!--INIT-->
@@ -128,8 +132,11 @@
               <!--End INIT-->
 
               <!--User Chat-->
-              <b-col v-else cols="12" class="h-100 ps-0 pe-0">
+              <b-col v-else-if="userSelected !== false" cols="12" class="h-100 ps-0 pe-0">
                 <div class="chat-user-header d-flex justify-content-between align-items-center">
+                  <div class="d-sm-block d-md-none pe-4 ps-3" @click="userSelected = false" style="color: #00bfa5; cursor: pointer">
+                    <i class="fas fa-arrow-left"></i>
+                  </div>
                   <div class="user-img-profile">
                     <img class="rounded-circle"
                          :src="require('@/assets/img/avatar'+ contacts_chat[userSelected].avatar +'.jpg')" alt="">
@@ -140,7 +147,7 @@
                       <small>Ultimo accesso {{ lastAccess() }} </small>
                     </div>
                   </div>
-                  <div class="icon-user-header">
+                  <div class="icon-user-header pe-2">
                     <svg viewBox="0 0 24 24" width="24" height="24" class="">
                       <path fill="currentColor"
                             d="M15.009 13.805h-.636l-.22-.219a5.184 5.184 0 0 0 1.256-3.386 5.207 5.207 0 1 0-5.207 5.208 5.183 5.183 0 0 0 3.385-1.255l.221.22v.635l4.004 3.999 1.194-1.195-3.997-4.007zm-4.808 0a3.605 3.605 0 1 1 0-7.21 3.605 3.605 0 0 1 0 7.21z"></path>
@@ -155,13 +162,61 @@
                   <div class="message mt-4 mb-4 me-4 ms-4 box3"
                        :class="{'align-self-end' : message.status === 'sent', 'sb13' : message.status === 'sent','sb14' : message.status === 'received' }"
                        v-for="(message,index) in contacts_chat[userSelected].messages" :key="index">
-                    <div>{{ message.text }}</div>
-                    <div class="hour-sent">{{ hourMessage(message.date) }}</div>
+                    <div class="ps-2 pb-2" :class="{'disabled': message.text === 'Messaggio Eliminato'}">
+                      {{ message.text }}
+                    </div>
+                    <div class="hour-sent">
+                      <span :class="{'read' : message.read}" v-if="message.status === 'sent'">
+                        <svg viewBox="0 0 18 18" width="18" height="18" class="">
+                         <path fill="currentColor"
+                               d="M17.394 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-.427-.388a.381.381 0 0 0-.578.038l-.451.576a.497.497 0 0 0 .043.645l1.575 1.51a.38.38 0 0 0 .577-.039l7.483-9.602a.436.436 0 0 0-.076-.609zm-4.892 0l-.57-.444a.434.434 0 0 0-.609.076l-6.39 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z"></path>
+                        </svg>
+                      </span>
+                      {{ hourMessage(message.date) }}
+                    </div>
+                    <div v-if="message.status === 'sent'" class="hover-chavron">
+                      <b-dropdown variant="link" toggle-class="text-decoration-none" no-caret menu-class="icon"
+                                  offset="-120">
+                        <template #button-content>
+                          <i class="fas fa-chevron-down"></i>
+                        </template>
+                        <b-dropdown-item v-for="(element,index_el) in optionsChatDropdown" :key="index_el"
+                                         :disabled="minor7(index)"
+                                         @click="handle_function_call(element.func, index)">
+                          <span :class="{'disabled': minor7(index)}">{{ element.el }}</span>
+                        </b-dropdown-item>
+                      </b-dropdown>
+
+                    </div>
                   </div>
 
                 </div>
+                <div class="footer-chat d-flex justify-content-around align-items-center">
+                  <div class="icon-send ps-2 pe-2">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                      <path fill="currentColor"
+                            d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"></path>
+                    </svg>
+                  </div>
+                  <div class="icon-send ps-2 pe-2">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                      <path fill="currentColor"
+                            d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path>
+                    </svg>
+                  </div>
+                  <div class="send flex-grow-1">
+                    <input type="text" class="input-group" placeholder="Scrivi il messaggio" v-model="messageSend"
+                           @keyup.enter="sendMessage">
+                  </div>
+                  <div class="icon-send ps-2 pe-2">
+                    <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                      <path fill="currentColor"
+                            d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"></path>
+                    </svg>
+                  </div>
+                </div>
               </b-col>
-              <b-col cols="12" class="footer-chat"></b-col>
+
               <!--End User Chat-->
 
             </b-row>
@@ -197,8 +252,16 @@ export default {
         'Impostazioni',
         'Disconnetti'
       ],
+      optionsChatDropdown: [
+        {
+          el: 'Cancella',
+          func: 'deleteMessage'
+        }
+      ],
       init: true,
-      userSelected: false
+      userSelected: false,
+      messageSend: '',
+      darkClass: false,
     }
   },
   methods: {
@@ -235,7 +298,48 @@ export default {
     },
     hourMessage(date) {
       return moment(date, 'MM/DD/YYYY HH:mm').format('HH:mm');
-    }
+    },
+    sendMessage() {
+      const user = this.contacts_chat[this.userSelected];
+      user.messages.push({
+        date: moment().locale('it').format('MM/DD/YYYY HH:mm'),
+        text: this.messageSend,
+        status: 'sent',
+        read: false
+      });
+      this.messageSend = '';
+      this.botSeeMessage(user);
+    },
+    botSeeMessage(user) {
+      let lastMessage = user.messages[user.messages.length - 1];
+      setTimeout(() => {
+        this.lastAccess();
+        lastMessage.read = true;
+      }, 3000);
+      setTimeout(() => {
+        user.messages.push({
+          date: moment().locale('it').format('MM/DD/YYYY HH:mm'),
+          text: 'Grazie',
+          status: 'received'
+        });
+      }, 4000)
+    },
+    handle_function_call(function_name, index) {
+      this[function_name](index);
+    },
+    deleteMessage(index) {
+      const user = this.contacts_chat[this.userSelected];
+      const messageToDelete = user.messages[index];
+      messageToDelete.text = 'Messaggio Eliminato';
+    },
+    minor7(index) {
+      const dateMessage = moment(this.contacts_chat[this.userSelected].messages[index].date, 'MM/DD/YYYY HH:mm');
+      return moment().diff(dateMessage, 'minutes') > 7;
+    },
+    darkMode() {
+      document.querySelector("body").classList.toggle('dark');
+      this.darkClass = !this.darkClass;
+    },
   },
 }
 </script>

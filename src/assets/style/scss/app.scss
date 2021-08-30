@@ -21,6 +21,7 @@
         border-right: 1px solid $_ligth_grey;
       }
 
+      /*HEADER*/
       .header {
         background: $_ligth_grey;
         height: 59px;
@@ -47,6 +48,9 @@
         }
       }
 
+      /*End HEADER*/
+
+      /*Notify*/
       .notify {
         min-height: 62px;
         background-color: #9de1fe;
@@ -63,6 +67,9 @@
         }
       }
 
+      /*End Notify*/
+
+      /*Search*/
       .search {
         background-color: $_ligth_grey;
         height: 49px;
@@ -101,6 +108,9 @@
         }
       }
 
+      /*End Search*/
+
+      /* List Chat*/
       .list-chat {
         height: calc(100% - 188px);
         background-color: $_background_default;
@@ -140,6 +150,9 @@
         }
       }
 
+      /*End List Chat*/
+
+      /*Overlay Init*/
       .container-overlay {
         color: $_white;
 
@@ -159,11 +172,21 @@
             }
           }
         }
+
+        .list-chat {
+          .chat-box {
+            .name {
+              color: black;
+            }
+          }
+        }
       }
 
+      /*End Overlay Init*/
 
+      /*Chat Init*/
       .init-chat {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 99%, rgba(74, 223, 131, 1) 99%);;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 99%, rgba(74, 223, 131, 1) 99%);
 
         .text-init {
           max-width: 400px;
@@ -210,7 +233,8 @@
           background-color: #e5ddd5;
           background-position: center center;
 
-          .hour-sent{
+
+          .hour-sent {
             color: $_dark_grey;
             position: absolute;
             font-size: 11px;
@@ -228,9 +252,28 @@
             font-weight: 400;
             font-size: 14px;
             position: relative;
-            z-index: 1;
+
+            &:hover {
+              .hover-chavron {
+                display: block;
+              }
+            }
           }
 
+          .hover-chavron {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            display: none;
+
+            .btn {
+              box-shadow: none;
+            }
+
+            .btn-link {
+              color: $_dark_grey;
+            }
+          }
 
           /* speech bubble 13 */
 
@@ -250,10 +293,10 @@
 
           /* speech bubble 14 */
 
-          .sb14{
+          .sb14 {
             background-color: #ffffff;
 
-            &:before{
+            &:before {
               content: "";
               width: 0;
               height: 0;
@@ -264,15 +307,150 @@
               border-bottom: 15px solid transparent;
               left: -16px;
               top: 0;
-              z-index: -1;
             }
           }
         }
 
         .footer-chat {
           height: 62px;
+          background-color: $_ligth_grey;
+
+          .send {
+            input {
+              outline: none;
+              border: 0;
+              border-radius: 30px;
+              padding: 0.5rem;
+            }
+          }
+
+          .icon-send {
+            color: $_dark_grey;
+          }
+        }
+      }
+
+      /*End Chat Init*/
+    }
+
+    /*Dark Mode*/
+    &.dark {
+
+      .header {
+        background: $_background_header_darker;
+      }
+
+      .notify {
+        background-color: #085373;
+
+        .text {
+          color: white;
+        }
+      }
+
+      .search {
+        background: $_background_header_darker;
+
+        button {
+          &.btn {
+            background: $_background_search_darker;
+          }
+        }
+
+        .text-search {
+          input {
+            color: white;
+
+            &.btn {
+              background: $_background_search_darker;
+            }
+          }
+        }
+      }
+
+      .list-chat {
+        background: $_background_header_darker;
+
+        .text-chat {
+          .name {
+            color: white;
+          }
+        }
+      }
+
+      .container-overlay {
+        background: $_background_header_darker;
+
+        .top {
+          color: white;
+        }
+
+        .list-chat {
+          .chat-box {
+            .name {
+              color: white;
+            }
+          }
+        }
+      }
+
+      .init-chat {
+        .chat-user-header {
+          background: $_background_header_darker;
+
+          .name-user {
+            color: white;
+          }
+        }
+
+        .chat-container {
+          background-color: rgba($_background_header_darker, 0.7);
+
+          .hover-chavron {
+            .btn-link {
+              color: white;
+            }
+          }
+
+          .hour-sent,
+          .read {
+            color: white;
+          }
+
+          .box3 {
+            background-color: $_green;
+            color: white;
+            font-weight: 400;
+          }
+
+          .sb13:before {
+            border-left: 15px solid $_green;
+            border-top: 15px solid $_green;
+          }
+
+          .sb14 {
+            background-color: $_background_header_darker;
+
+            &:before {
+              border-right: 15px solid $_background_header_darker;
+              border-top: 15px solid $_background_header_darker;
+            }
+          }
+        }
+
+        .footer-chat {
+          background-color: $_background_header_darker;
+
+          .send {
+            input {
+              background-color: $_background_search_darker;
+              color: white;
+            }
+          }
         }
       }
     }
+
+    /*End Dark Mode*/
   }
 }
