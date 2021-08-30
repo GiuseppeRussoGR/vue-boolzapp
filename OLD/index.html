@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Boolzapp</title>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+			integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<!--Wrapper-->
+		<div
+			id="wrapper"
+			class="wrapper"
+			:class="{darkBackground : inDarkMode.wrapperBackground}"
+		>
+			<!--App-->
+			<div id="app">
+				<!--Column Contact-->
+				<div class="column-contact">
+					<!--Container User-->
+					<div class="container-user">
+						<div class="image-name">
+							<!--Profile Image-->
+							<div class="image">
+								<img src="img/avatar_2.jpg" alt="Profile Image" />
+							</div>
+							<!--End Profile Image-->
+							<!--Profile Name-->
+							<div class="name-user">Ciccio Ingrassia</div>
+							<!--End Profile Name-->
+						</div>
+						<!--Icon-->
+						<div class="icon-container">
+							<i @click="darkMode" class="fas fa-adjust"></i>
+							<i class="fas fa-circle-notch"></i>
+							<i class="fas fa-comment-alt"></i>
+							<i class="fas fa-ellipsis-v"></i>
+						</div>
+						<!--End Icon-->
+					</div>
+					<!--End Container User-->
+					<!--Notification-->
+					<div class="notification-container">
+						<div class="icon-notification">
+							<i class="fas fa-bell-slash"></i>
+						</div>
+						<div class="notification-text">
+							<p>Ricevi notifiche di nuovi messaggi</p>
+							<a href="#">Attiva notifiche desktop</a>
+						</div>
+					</div>
+					<!--End Notification-->
+					<!--Filter-->
+					<div class="filter">
+						<div class="filter-container">
+							<div class="icon-search"><i class="fas fa-search"></i></div>
+							<div class="input-search">
+								<input
+									type="text"
+									placeholder="Cerca o inizia una nuova chat"
+									@keyup="searchName"
+									v-model="filterName"
+								/>
+							</div>
+						</div>
+					</div>
+					<!--End Filter-->
+					<!--Contact list-->
+					<div class="contact-list-container">
+						<div class="contact-list">
+							<!--Single Image-Name-->
+							<div
+								class="image-name"
+								:class="{active : userClicked === index}"
+								v-for="(contact,index) in contacts"
+								@click="selectUser(index)"
+								v-if="contact.visible"
+							>
+								<!--Profile Image-->
+								<div class="image">
+									<img
+										:src="'img/avatar'+ contact.avatar +'.jpg'"
+										:alt="`${contact.name} Image`"
+									/>
+								</div>
+								<!--End Profile Image-->
+								<!--Profile Name-->
+								<div class="name-user">
+									<div class="userName">{{contact.name}}</div>
+									<div v-if="lastActivities(index) !== ''" class="last-message">
+										{{contact.messages[contact.messages.length -
+										1].text.slice(0, 8)}}...
+									</div>
+								</div>
+								<!--End Profile Name-->
+								<div
+									v-if="lastActivities(index) !== ''"
+									class="last-activities"
+								>
+									{{lastActivities(index)}}
+								</div>
+								<div class="last-activities" v-else>Nessun Messaggio</div>
+							</div>
+							<!--End Single Image-Name-->
+						</div>
+					</div>
+					<!--End Contact list-->
+				</div>
+				<!--End Column Contact-->
+				<!--Column Chat-->
+				<div class="column-chat">
+					<!--Container User-->
+					<div class="container-user">
+						<div class="image-name">
+							<!--Profile Image-->
+							<div class="image">
+								<img
+									:src="'img/avatar'+ contacts[userClicked].avatar +'.jpg'"
+									:alt="`${contacts[userClicked].name} Image`"
+								/>
+							</div>
+							<!--End Profile Image-->
+							<!--Profile Name-->
+							<div class="name-user">{{contacts[userClicked].name}}</div>
+							<!--End Profile Name-->
+							<div
+								v-if="lastActivities(userClicked) !== ''"
+								class="last-activities"
+							>
+								Ultimo accesso {{lastActivities(userClicked)}}
+							</div>
+							<div class="last-activities" v-else>
+								Ultimo Accesso Sconosciuto
+							</div>
+						</div>
+						<!--Icon-->
+						<div class="icon-container">
+							<i class="fas fa-search"></i>
+							<i class="fas fa-paperclip"></i>
+							<i class="fas fa-ellipsis-v"></i>
+						</div>
+						<!--End Icon-->
+					</div>
+					<!--End Container User-->
+					<!--Container Chat-->
+					<div class="container-chat">
+						<!--Message-->
+						<div
+							class="message"
+							:class="{'justify-end': message.status === 'sent'}"
+							v-for="(message,index) in contacts[userClicked].messages"
+						>
+							<div
+								class="message-container"
+								:class="{right: message.status === 'sent', left: message.status === 'received'}"
+							>
+								<p class="text">{{message.text}}</p>
+								<div class="drop_menu">
+									<div @click="dropMenu(index)" class="icon">
+										<i class="fas fa-chevron-down"></i>
+									</div>
+									<div v-if="message.dropVisible" class="dropmenu">
+										<ul>
+											<li>Message info</li>
+											<li @click="deleteMessage(index)">Delete Message</li>
+										</ul>
+									</div>
+								</div>
+								<p class="clock">{{message.date}}</p>
+							</div>
+						</div>
+						<!--End Message-->
+					</div>
+					<!--End Container Chat-->
+					<!--Send Message-->
+					<div class="send-message">
+						<!--Icon-->
+						<div class="icon-container">
+							<i class="far fa-grin"></i>
+						</div>
+						<!--End Icon-->
+						<!--Input Message-->
+						<div class="input-message">
+							<input
+								type="text"
+								v-model="messageUserSend"
+								placeholder="Scrivi un messaggio"
+								@keyup.enter="sendMessage"
+							/>
+						</div>
+						<!--End Input Message-->
+						<!--Icon-->
+						<div class="icon-container">
+							<i class="fas fa-microphone"></i>
+						</div>
+						<!--End Icon-->
+					</div>
+					<!--End Send Message-->
+				</div>
+				<!--End Column Chat-->
+			</div>
+			<!--End App-->
+		</div>
+		<!--End Wrapper-->
+		<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+		<!--!Vue in modalità developer-->
+		<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+		<script src="js/script.js"></script>
+	</body>
+</html>
